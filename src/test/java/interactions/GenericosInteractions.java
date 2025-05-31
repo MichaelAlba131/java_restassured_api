@@ -10,6 +10,8 @@ import io.restassured.specification.RequestSpecification;
 import java.util.List;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class GenericosInteractions {
 
     private RequestSpecification request;
@@ -90,7 +92,7 @@ public class GenericosInteractions {
                 .findFirst()
                 .orElseThrow(() -> new AssertionError("Nenhum item encontrado com " + chaveBusca + "=" + valorBusca));
         Object valor = itemEncontrado.get(campoValidar);
-        org.junit.Assert.assertEquals(valorEsperado, valor != null ? valor.toString() : null);
+        assertEquals(valorEsperado, valor != null ? valor.toString() : null);
     }
 
 }

@@ -1,8 +1,6 @@
 package steps;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import interactions.GenericosInteractions;
 import interactions.ScenarioContext;
 import io.cucumber.datatable.DataTable;
@@ -10,23 +8,26 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.java.it.Quando;
 import io.restassured.response.Response;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class GenericosSteps extends GenericosInteractions {
+public class GenericosSteps {
 
-    private final ScenarioContext contexto;
-    private final GenericosInteractions interactions;
+    private final ScenarioContext contexto = new ScenarioContext();
+    private final GenericosInteractions interactions = new GenericosInteractions();
 
-    public GenericosSteps() {
-        this.contexto = new ScenarioContext();
-        this.interactions = new GenericosInteractions();
+    @Quando("pauso cinco segundos")
+    public void pauso_cinco_segundos() throws Exception {
+        System.out.println("INICIO: " + Thread.currentThread().getName());
+        Thread.sleep(5000);
+        System.out.println("FIM: " + Thread.currentThread().getName());
     }
+
 
     @Given("the base URL is {string}")
     public void the_base_url_is(String url) {
@@ -35,9 +36,9 @@ public class GenericosSteps extends GenericosInteractions {
 
     @Given("I set the request headers:")
     public void i_set_the_request_headers(DataTable dataTable) {
-        initRequest();
+        interactions.initRequest();
         Map<String, String> headers = dataTable.asMap(String.class, String.class);
-        addHeaders(headers);
+        interactions.addHeaders(headers);
     }
 
     @And("I set the request query parameters:")
@@ -49,7 +50,7 @@ public class GenericosSteps extends GenericosInteractions {
     @And("I set the request body with fields:")
     public void i_set_the_request_body_with_fields(io.cucumber.datatable.DataTable dataTable) {
         Map<String, String> bodyMap = dataTable.asMap(String.class, String.class);
-        setBody(bodyMap);
+        interactions.setBody(bodyMap);
     }
 
     @When("I send a {string} request to {string}")
@@ -74,6 +75,6 @@ public class GenericosSteps extends GenericosInteractions {
 
     @Then("the item with {string} equal to {string} should have the field {string} with value {string}")
     public void validateItemDynamically(String chaveBusca, String valorBusca, String campoValidar, String valorEsperado) throws JsonProcessingException {
-        assertItemFieldValue(contexto.getResponse(), chaveBusca, valorBusca, campoValidar, valorEsperado);
+        interactions.assertItemFieldValue(contexto.getResponse(), chaveBusca, valorBusca, campoValidar, valorEsperado);
     }
 }

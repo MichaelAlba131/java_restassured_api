@@ -10,6 +10,7 @@ Feature: Makeup API - Products
     Then the response status code should be 200
     Then the item with "id" equal to "1" should have the field "name" with value "Pure Anada Natural Mascara"
 
+
   @get @filtro
   Scenario: Successfully retrieve lipsticks of brand Covergirl
     Given the base URL is "http://makeup-api.herokuapp.com"
@@ -20,7 +21,7 @@ Feature: Makeup API - Products
       | Content-Type | application/json |
     When I send a "GET" request to "/api/v1/products.json"
     Then the response status code should be 200
-
+    When pauso cinco segundos
 
   #Caso seja uma requisição POST USAR:
   # When I send a "POST" request to "/api/v1/..."
