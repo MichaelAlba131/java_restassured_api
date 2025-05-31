@@ -19,6 +19,11 @@ Os testes abrangem buscas, filtros por marca e validação de informações deta
 - 🆔 Validação de campo específico por ID do produto
 - 🔄 Testes dinâmicos para combinações personalizadas de filtros
 
+## 💉 Injeção de dependências e suporte a múltiplas threads
+
+Para garantir a isolação dos cenários, suportando execução paralela/multithread no Cucumber, utilizamos injeção de dependências baseada em construtor, combinada ao uso de classes de contexto (`ScenarioContext`).  
+Assim, cada thread de execução de testes manipula seu próprio contexto, evitando interferências. 
+
 ## 💻 Como executar
 
 Clone o repositório:
