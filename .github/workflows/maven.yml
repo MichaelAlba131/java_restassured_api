@@ -1,23 +1,42 @@
-name: Run API Tests
+name: Run API Tests with Both Jobs Always
 
 on:
-  push:       # roda em todos os pushes em qualquer branch
-  pull_request:  # roda em qualquer PR, qualquer branch de origem/destino
+  push:
+    branches: ["main", "parallel_tests_api"]
+  pull_request:
+    branches: ["main", "parallel_tests_api"]
 
 jobs:
-  parallel-tests:
-    name: Run parallel tests on any branch
+  run-on-main:
+    name: Run tests on main branch
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout código
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
-          distribution: 'temurin'
+          java-version: 17
+          distribution: temurin
 
-      - name: Rodar testes paralelos
+      - name: Run tests on main
+        run: mvn clean verify
+
+  run-on-parallel:
+    name: Run tests on parallel_tests_api branch
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: temurin
+
+      - name: Run parallel tests
         run: mvn clean verify
