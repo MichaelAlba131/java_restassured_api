@@ -45,5 +45,19 @@ Filtrar batons da marca Covergirl:
 curl -X GET "http://makeup-api.herokuapp.com/api/v1/products?brand=covergirl&type=lipstick"
 ```
 
+## 🔀 Branches e Execução de Testes
+
+### 🌱 main
+Esta branch contém a configuração **padrão** do projeto, com o Test Runner tradicional do Cucumber.
+Os cenários são executados **de forma sequencial** (um após o outro).
+
+### ⚡ parallel_tests_api
+Nesta branch, os testes estão configurados para **execução paralela dos cenários**!
+O paralelismo é ativado pelo arquivo em `src/test/resources`, permitindo rodar múltiplos cenários ao mesmo tempo e acelerando os testes. `junit-platform.properties`
+
+<br />
+<br />
+
+
 Contribuições e sugestões são sempre bem-vindas!
 Fique à vontade para abrir issues ou pull requests 🤝
