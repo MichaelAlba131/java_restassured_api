@@ -4,12 +4,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import interactions.GenericosInteractions;
+import interactions.ScenarioContext;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,13 +20,17 @@ import static org.junit.Assert.assertEquals;
 
 public class GenericosSteps extends GenericosInteractions {
 
-    static Response response;
-    static String baseUrl = "";
-    static Map<String, String> queryParams = new java.util.HashMap<>();
+    private final ScenarioContext contexto;
+    private final GenericosInteractions interactions;
+
+    public GenericosSteps() {
+        this.contexto = new ScenarioContext();
+        this.interactions = new GenericosInteractions();
+    }
 
     @Given("the base URL is {string}")
     public void the_base_url_is(String url) {
-        baseUrl = url;
+        contexto.setBaseUrl(url);
     }
 
     @Given("I set the request headers:")
@@ -35,8 +42,8 @@ public class GenericosSteps extends GenericosInteractions {
 
     @And("I set the request query parameters:")
     public void i_set_the_request_query_parameters(DataTable dataTable) {
-        queryParams.clear();
-        queryParams.putAll(dataTable.asMap(String.class, String.class));
+        Map<String, String> params = new HashMap<>(dataTable.asMap(String.class, String.class));
+        contexto.setQueryParams(params);
     }
 
     @And("I set the request body with fields:")
@@ -47,33 +54,26 @@ public class GenericosSteps extends GenericosInteractions {
 
     @When("I send a {string} request to {string}")
     public void i_send_a_request_to(String method, String endpoint) {
-        String url = baseUrl + endpoint;
-        if (queryParams.isEmpty()) {
-            response = sendRequest(method, url);
+        String url = contexto.getBaseUrl() + endpoint;
+        Response response;
+        if (contexto.getQueryParams() == null || contexto.getQueryParams().isEmpty()) {
+            response = interactions.sendRequest(method, url);
         } else {
-            response = sendRequestWithQueryParams(method, url, queryParams);
+            response = interactions.sendRequestWithQueryParams(method, url, contexto.getQueryParams());
         }
+        contexto.setResponse(response);
         System.out.println(response.prettyPrint());
+
     }
 
 
     @Then("the response status code should be {int}")
     public void the_response_status_code_should_be(Integer statusCode) {
-        assertEquals(statusCode.intValue(), response.statusCode());
+        assertEquals(statusCode.intValue(), contexto.getResponse().statusCode());
     }
 
     @Then("the item with {string} equal to {string} should have the field {string} with value {string}")
     public void validateItemDynamically(String chaveBusca, String valorBusca, String campoValidar, String valorEsperado) throws JsonProcessingException {
-        String json = response.getBody().asString();
-        ObjectMapper mapper = new ObjectMapper();
-        List<Map<String, Object>> itens = mapper.readValue(json, new TypeReference<List<Map<String, Object>>>() {
-        });
-        Map<String, Object> itemEncontrado = itens.stream()
-                .filter(m -> valorBusca.equals(
-                        m.getOrDefault(chaveBusca, "").toString()))
-                .findFirst()
-                .orElseThrow(() -> new AssertionError("Nenhum item encontrado com " + chaveBusca + "=" + valorBusca));
-        Object valor = itemEncontrado.get(campoValidar);
-        assertEquals(valorEsperado, valor != null ? valor.toString() : null);
+        assertItemFieldValue(contexto.getResponse(), chaveBusca, valorBusca, campoValidar, valorEsperado);
     }
 }
