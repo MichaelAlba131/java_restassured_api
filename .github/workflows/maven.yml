@@ -1,14 +1,12 @@
 name: Run API Tests
 
 on:
-  push:
-    branches: ["main", "parallel_tests_api"]
-  pull_request:
-    branches: ["main", "parallel_tests_api"]
+  push:       # roda em todos os pushes em qualquer branch
+  pull_request:  # roda em qualquer PR, qualquer branch de origem/destino
 
 jobs:
   parallel-tests:
-    name: Run parallel tests
+    name: Run parallel tests on any branch
     runs-on: ubuntu-latest
 
     steps:
