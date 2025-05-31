@@ -2,6 +2,8 @@
 
 Este repositório contém um projeto de testes automatizados desenvolvido para validar os endpoints de uma API de produtos de maquiagem, garantindo a confiabilidade das funcionalidades principais e a integridade dos dados fornecidos.
 Os testes abrangem buscas, filtros por marca e validação de informações detalhadas dos produtos.
+<br />
+<br />
 
 ## 🚀 Tecnologias utilizadas
 
@@ -11,6 +13,7 @@ Os testes abrangem buscas, filtros por marca e validação de informações deta
 - (BDD) 🥒 **Cucumber**
 - **RestAssured** 🌐
 - **Maven** (gestão de dependências) 📦
+<br />
 
 ## 📑 Funcionalidades testadas
 
@@ -18,11 +21,14 @@ Os testes abrangem buscas, filtros por marca e validação de informações deta
 - 💄 Filtro de batons por marca (ex: Covergirl)
 - 🆔 Validação de campo específico por ID do produto
 - 🔄 Testes dinâmicos para combinações personalizadas de filtros
+<br />
 
 ## 💉 Injeção de dependências e suporte a múltiplas threads
 
 Para garantir a isolação dos cenários, suportando execução paralela/multithread no Cucumber, utilizamos injeção de dependências baseada em construtor, combinada ao uso de classes de contexto (`ScenarioContext`).  
 Assim, cada thread de execução de testes manipula seu próprio contexto, evitando interferências. 
+<br />
+<br />
 
 ## 💻 Como executar
 
@@ -31,6 +37,7 @@ Clone o repositório:
 git clone https://github.com/seu-usuario/seu-repositorio.git
 cd seu-repositorio
 ```
+<br />
 
 ## ✨ Exemplos de uso dos endpoints testados
 
@@ -44,6 +51,7 @@ Filtrar batons da marca Covergirl:
 ```bash
 curl -X GET "http://makeup-api.herokuapp.com/api/v1/products?brand=covergirl&type=lipstick"
 ```
+<br />
 
 ## 🔀 Branches e Execução de Testes
 
