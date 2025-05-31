@@ -7,38 +7,9 @@ on:
     branches: ["main", "parallel_tests_api"]
 
 jobs:
-  debug-info:
-    name: Debug GitHub context
-    runs-on: ubuntu-latest
-    steps:
-      - name: Print GitHub context
-        run: |
-          echo "github.ref: ${{ github.ref }}"
-          echo "github.head_ref: ${{ github.head_ref }}"
-          echo "github.event_name: ${{ github.event_name }}"
-
-  test-main:
-    name: Run tests on main
-    runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/heads/main') || github.head_ref == 'main'
-
-    steps:
-      - name: Checkout código
-        uses: actions/checkout@v3
-
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Rodar testes
-        run: mvn clean verify
-
   parallel-tests:
-    name: Run parallel tests on parallel_tests_api
+    name: Run parallel tests
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/heads/parallel_tests_api') || github.head_ref == 'parallel_tests_api'
 
     steps:
       - name: Checkout código
