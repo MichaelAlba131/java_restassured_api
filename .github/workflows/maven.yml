@@ -28,18 +28,19 @@ jobs:
   parallel-tests:
     name: Run parallel tests on parallel_tests_api
     runs-on: ubuntu-latest
-    if: (github.ref == 'refs/heads/parallel_tests_api') || (github.head_ref == 'parallel_tests_api')
-
-
+    if: |
+      (github.ref == 'refs/heads/parallel_tests_api') ||
+      (github.head_ref == 'parallel_tests_api')
     steps:
       - name: Checkout código
         uses: actions/checkout@v3
-
+  
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
-
+  
       - name: Rodar testes paralelos
         run: mvn clean verify
+
