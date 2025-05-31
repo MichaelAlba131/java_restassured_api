@@ -1,21 +1,16 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
-
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
 name: Run API Tests
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main", "parallel_tests_api"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main", "parallel_tests_api"]
 
 jobs:
-  test:
+  test-main:
+    name: Run tests on main
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
 
     steps:
       - name: Checkout código
@@ -28,4 +23,22 @@ jobs:
           distribution: 'temurin'
 
       - name: Rodar testes
+        run: mvn clean verify
+
+  parallel-tests:
+    name: Run parallel tests on parallel_tests_api
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/parallel_tests_api'
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Rodar testes paralelos
         run: mvn clean verify
