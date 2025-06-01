@@ -47,3 +47,7 @@ curl -X GET "http://makeup-api.herokuapp.com/api/v1/products?brand=covergirl&typ
 
 Contribuições e sugestões são sempre bem-vindas!
 Fique à vontade para abrir issues ou pull requests 🤝
+
+## Licença
+Copyright (c) 2025 Michael Alba.
+Todos os direitos reservados.
