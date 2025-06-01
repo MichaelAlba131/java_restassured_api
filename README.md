@@ -70,3 +70,7 @@ O paralelismo é ativado pelo arquivo em `src/test/resources`, permitindo rodar 
 
 Contribuições e sugestões são sempre bem-vindas!
 Fique à vontade para abrir issues ou pull requests 🤝
+
+## Licença
+Copyright (c) 2025 Michael Alba.
+Todos os direitos reservados.
