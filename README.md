@@ -1,8 +1,9 @@
-# 🛒 Projeto de Testes Automatizados — API de Produtos de Maquiagem
-<br />
+# 🚀 Projeto Java Selenium ( Testes em Paralelo ) + BDD + Page Objects
 
 Este repositório contém um projeto de testes automatizados desenvolvido para validar os endpoints de uma API de produtos de maquiagem, garantindo a confiabilidade das funcionalidades principais e a integridade dos dados fornecidos.
 Os testes abrangem buscas, filtros por marca e validação de informações detalhadas dos produtos.
+
+Pronto para execuções locais ou em CI/CD via <strong>GitHub Actions</strong>!
 <br />
 <br />
 
